@@ -1,0 +1,168 @@
+<!-- Shared Navigation for Voidlight Tools -->
+<style>
+  .voidlight-shared-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #1a1f3a 0%, #2d3748 100%);
+    border-bottom: 2px solid #4a5568;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    padding: 0.75rem 2rem;
+  }
+
+  .voidlight-shared-nav-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .voidlight-shared-nav-brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .voidlight-shared-nav-brand:hover {
+    color: #667eea;
+  }
+
+  .voidlight-shared-nav-links {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .voidlight-shared-nav-link {
+    color: #e0e6ed;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .voidlight-shared-nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .voidlight-shared-nav-link.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: #fff;
+  }
+
+  .voidlight-shared-nav-icon {
+    font-size: 1.1rem;
+  }
+
+  .voidlight-shared-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .voidlight-shared-nav {
+      padding: 0.75rem 1rem;
+    }
+
+    .voidlight-shared-nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #1a1f3a;
+      flex-direction: column;
+      padding: 1rem;
+      border-bottom: 2px solid #4a5568;
+    }
+
+    .voidlight-shared-nav-links.active {
+      display: flex;
+    }
+
+    .voidlight-shared-nav-toggle {
+      display: block;
+    }
+
+    .voidlight-shared-nav-link {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  body {
+    padding-top: 60px !important;
+  }
+</style>
+
+<nav class="voidlight-shared-nav">
+  <div class="voidlight-shared-nav-content">
+    <a href="https://pedroalto.github.io/VoidlightCharacterCreator/" class="voidlight-shared-nav-brand">
+      <span>✨</span>
+      Voidlight Tools
+    </a>
+    
+    <button class="voidlight-shared-nav-toggle" onclick="toggleSharedNav()">☰</button>
+    
+    <div class="voidlight-shared-nav-links" id="sharedNavLinks">
+      <a href="https://pedroalto.github.io/VoidlightCharacterCreator/" class="voidlight-shared-nav-link">
+        <span class="voidlight-shared-nav-icon">🏠</span>
+        Home
+      </a>
+      <a href="https://pedroalto.github.io/VoidlightCharacterCreator/character-creator/" class="voidlight-shared-nav-link">
+        <span class="voidlight-shared-nav-icon">🎭</span>
+        Character Creator
+      </a>
+      <a href="https://pedroalto.github.io/VoidlightCharacterCreator/keeper-tool/" class="voidlight-shared-nav-link">
+        <span class="voidlight-shared-nav-icon">⚡</span>
+        Keeper Tool
+      </a>
+      <a href="https://pedroalto.github.io/VodiLight_GM/" class="voidlight-shared-nav-link" target="_blank">
+        <span class="voidlight-shared-nav-icon">🎮</span>
+        GM Screen
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  function toggleSharedNav() {
+    const navLinks = document.getElementById('sharedNavLinks');
+    navLinks.classList.toggle('active');
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const currentPath = window.location.pathname;
+    const links = document.querySelectorAll('.voidlight-shared-nav-link');
+    
+    links.forEach(link => {
+      const linkPath = new URL(link.href).pathname;
+      if (currentPath.includes(linkPath) && linkPath !== '/VoidlightCharacterCreator/') {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
