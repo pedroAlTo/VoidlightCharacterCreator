@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voidlight Tools</title>
+  <title>Voidlight Tools Suite</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -19,20 +19,134 @@
       background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%);
       color: #e5e7eb;
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #1a1f3a 0%, #2d3748 100%);
+      border-bottom: 2px solid #4a5568;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      padding: 0.75rem 2rem;
+    }
+
+    .nav-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-brand-icon {
+      font-size: 1.75rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.1); }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #e0e6ed;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .nav-link.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-color: #667eea;
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+    }
+
+    .nav-icon {
+      font-size: 1.2rem;
+    }
+
+    /* Mobile menu */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    /* Main content area */
+    .main-content {
+      margin-top: 70px;
+      min-height: calc(100vh - 70px);
+    }
+
+    .tool-container {
+      display: none;
+      width: 100%;
+      min-height: calc(100vh - 70px);
+    }
+
+    .tool-container.active {
+      display: block;
+    }
+
+    .tool-frame {
+      width: 100%;
+      min-height: calc(100vh - 70px);
+      border: none;
+      background: transparent;
+    }
+
+    /* Welcome screen */
+    .welcome-screen {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      min-height: calc(100vh - 70px);
       padding: 2rem;
-    }
-
-    .container {
-      max-width: 1200px;
-      width: 100%;
       text-align: center;
     }
 
-    h1 {
+    .welcome-title {
       font-family: 'Orbitron', sans-serif;
       font-size: 3.5rem;
       margin-bottom: 1rem;
@@ -40,10 +154,9 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
     }
 
-    .subtitle {
+    .welcome-subtitle {
       font-size: 1.25rem;
       color: #a0aec0;
       margin-bottom: 3rem;
@@ -51,20 +164,19 @@
 
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
-      margin-top: 3rem;
+      max-width: 1200px;
+      width: 100%;
     }
 
     .tool-card {
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      padding: 2.5rem;
+      padding: 2rem;
       transition: all 0.3s ease;
       cursor: pointer;
-      text-decoration: none;
-      display: block;
     }
 
     .tool-card:hover {
@@ -74,55 +186,23 @@
       background: rgba(255, 255, 255, 0.08);
     }
 
-    .tool-icon {
-      font-size: 4rem;
-      margin-bottom: 1.5rem;
+    .tool-card-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
       display: block;
     }
 
-    .tool-title {
+    .tool-card-title {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       color: #fff;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
-    .tool-description {
+    .tool-card-description {
       color: #a0aec0;
       line-height: 1.6;
-      font-size: 1rem;
-    }
-
-    .tool-features {
-      margin-top: 1.5rem;
-      text-align: left;
-      padding-left: 1.5rem;
-    }
-
-    .tool-features li {
-      color: #e0e6ed;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-    }
-
-    .footer {
-      margin-top: 4rem;
-      color: #6b7280;
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5rem;
-      }
-
-      .tools-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .tool-card {
-        padding: 2rem;
-      }
+      font-size: 0.95rem;
     }
 
     /* Animated stars background */
@@ -149,51 +229,134 @@
       border-radius: 50%;
       animation: twinkle 3s infinite;
     }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-bar {
+        padding: 0.75rem 1rem;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #1a1f3a;
+        flex-direction: column;
+        padding: 1rem;
+        border-bottom: 2px solid #4a5568;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .nav-link {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .welcome-title {
+        font-size: 2.5rem;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
 <body>
   <div class="stars" id="stars"></div>
-  
-  <div class="container">
-    <h1>✨ Voidlight Tools</h1>
-    <p class="subtitle">Campaign Management Suite for Voidlight RPG</p>
 
-    <div class="tools-grid">
-      <a href="./character-creator/" class="tool-card">
-        <span class="tool-icon">🎭</span>
-        <h2 class="tool-title">Character Creator</h2>
-        <p class="tool-description">
-          Forge your character for the void. Create detailed characters with AI-powered backstories and complete stat management.
-        </p>
-        <ul class="tool-features">
-          <li>AI-powered character generation</li>
-          <li>Complete trait and skill management</li>
-          <li>Domain powers and abilities</li>
-          <li>Equipment and inventory tracking</li>
-        </ul>
-      </a>
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <span class="nav-brand-icon">✨</span>
+        Voidlight Tools
+      </div>
+      
+      <button class="nav-toggle" onclick="toggleNav()">☰</button>
+      
+      <div class="nav-links" id="navLinks">
+        <a class="nav-link active" onclick="showTool('welcome')" data-tool="welcome">
+          <span class="nav-icon">🏠</span>
+          Home
+        </a>
+        <a class="nav-link" onclick="showTool('character-creator')" data-tool="character-creator">
+          <span class="nav-icon">🎭</span>
+          Character Creator
+        </a>
+        <a class="nav-link" onclick="showTool('keeper-tool')" data-tool="keeper-tool">
+          <span class="nav-icon">⚡</span>
+          Keeper Tool
+        </a>
+        <a class="nav-link" onclick="showTool('gm-screen')" data-tool="gm-screen">
+          <span class="nav-icon">🎮</span>
+          GM Screen
+        </a>
+      </div>
+    </div>
+  </nav>
 
-      <a href="./keeper-tool/" class="tool-card">
-        <span class="tool-icon">⚡</span>
-        <h2 class="tool-title">Keeper Tool</h2>
-        <p class="tool-description">
-          Master your campaign. Comprehensive DM tools for managing clocks, tokens, NPCs, and the flow of Hope and Fear.
-        </p>
-        <ul class="tool-features">
-          <li>Clock management (4/6/8/12 segments)</li>
-          <li>Fear & Hope token tracking</li>
-          <li>Duality dice roller (2d12)</li>
-          <li>NPC & enemy tracker</li>
-          <li>Session notes & Keeper moves</li>
-        </ul>
-      </a>
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Welcome Screen -->
+    <div id="welcome" class="tool-container active">
+      <div class="welcome-screen">
+        <h1 class="welcome-title">Voidlight Tools Suite</h1>
+        <p class="welcome-subtitle">Complete Campaign Management for Voidlight RPG</p>
+        
+        <div class="tools-grid">
+          <div class="tool-card" onclick="showTool('character-creator')">
+            <span class="tool-card-icon">🎭</span>
+            <h3 class="tool-card-title">Character Creator</h3>
+            <p class="tool-card-description">
+              Forge your character for the void with AI-powered generation and complete stat management.
+            </p>
+          </div>
+
+          <div class="tool-card" onclick="showTool('keeper-tool')">
+            <span class="tool-card-icon">⚡</span>
+            <h3 class="tool-card-title">Keeper Tool</h3>
+            <p class="tool-card-description">
+              Master your campaign with clocks, tokens, dice roller, NPC tracker, and keeper moves.
+            </p>
+          </div>
+
+          <div class="tool-card" onclick="showTool('gm-screen')">
+            <span class="tool-card-icon">🎮</span>
+            <h3 class="tool-card-title">GM Screen</h3>
+            <p class="tool-card-description">
+              Quick reference for rules, tables, and essential game mechanics at your fingertips.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="footer">
-      <p>Built for Voidlight RPG • A galaxy of patched-up ships and patched-up souls</p>
+    <!-- Character Creator -->
+    <div id="character-creator" class="tool-container">
+      <iframe src="./character-creator/" class="tool-frame" id="character-creator-frame"></iframe>
     </div>
-  </div>
+
+    <!-- Keeper Tool -->
+    <div id="keeper-tool" class="tool-container">
+      <iframe src="./keeper-tool/" class="tool-frame" id="keeper-tool-frame"></iframe>
+    </div>
+
+    <!-- GM Screen -->
+    <div id="gm-screen" class="tool-container">
+      <iframe src="https://pedroalto.github.io/VodiLight_GM/" class="tool-frame" id="gm-screen-frame"></iframe>
+    </div>
+  </main>
 
   <script>
     // Generate random stars
@@ -206,6 +369,55 @@
       star.style.animationDelay = Math.random() * 3 + 's';
       starsContainer.appendChild(star);
     }
+
+    // Navigation toggle for mobile
+    function toggleNav() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+
+    // Show tool function
+    function showTool(toolId) {
+      // Hide all tools
+      document.querySelectorAll('.tool-container').forEach(container => {
+        container.classList.remove('active');
+      });
+
+      // Show selected tool
+      document.getElementById(toolId).classList.add('active');
+
+      // Update active nav link
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-tool') === toolId) {
+          link.classList.add('active');
+        }
+      });
+
+      // Close mobile menu
+      document.getElementById('navLinks').classList.remove('active');
+
+      // Update URL hash without scrolling
+      history.pushState(null, null, '#' + toolId);
+    }
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', function() {
+      const hash = window.location.hash.substring(1);
+      if (hash && document.getElementById(hash)) {
+        showTool(hash);
+      } else {
+        showTool('welcome');
+      }
+    });
+
+    // Load tool from URL hash on page load
+    window.addEventListener('load', function() {
+      const hash = window.location.hash.substring(1);
+      if (hash && document.getElementById(hash)) {
+        showTool(hash);
+      }
+    });
   </script>
 </body>
 </html>
