@@ -1,211 +1,937 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voidlight Tools</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voidlight Tools Suite - Chronicles of the Stellar Veil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%);
-      color: #e5e7eb;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            color: #e0e0e0;
+            background: #0a0f23;
+        }
 
-    .container {
-      max-width: 1200px;
-      width: 100%;
-      text-align: center;
-    }
+        /* Starfield Container */
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
-    }
+        /* Content Overlay */
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
 
-    .subtitle {
-      font-size: 1.25rem;
-      color: #a0aec0;
-      margin-bottom: 3rem;
-    }
+        /* Header */
+        .header {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .tool-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 2.5rem;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-    }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+        }
 
-    .tool-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(102, 126, 234, 0.5);
-      box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
-      background: rgba(255, 255, 255, 0.08);
-    }
+        .logo-icon {
+            font-size: 2rem;
+        }
 
-    .tool-icon {
-      font-size: 4rem;
-      margin-bottom: 1.5rem;
-      display: block;
-    }
+        .logo-text h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .tool-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.75rem;
-      color: #fff;
-      margin-bottom: 1rem;
-    }
+        .logo-text p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
 
-    .tool-description {
-      color: #a0aec0;
-      line-height: 1.6;
-      font-size: 1rem;
-    }
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+        }
 
-    .tool-features {
-      margin-top: 1.5rem;
-      text-align: left;
-      padding-left: 1.5rem;
-    }
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
 
-    .tool-features li {
-      color: #e0e6ed;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-    }
+        .nav-tab:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+        }
 
-    .footer {
-      margin-top: 4rem;
-      color: #6b7280;
-      font-size: 0.9rem;
-    }
+        .nav-tab.active {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: rgba(139, 92, 246, 0.6);
+        }
 
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5rem;
-      }
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
 
-      .tools-grid {
-        grid-template-columns: 1fr;
-      }
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 2rem;
+            scroll-margin-top: 80px;
+        }
 
-      .tool-card {
-        padding: 2rem;
-      }
-    }
+        /* Hero Section */
+        .hero {
+            text-align: center;
+        }
 
-    /* Animated stars background */
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    .stars {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-    }
+        .hero p {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
 
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 3s infinite;
-    }
-  </style>
+        /* Tool Cards */
+        .tools-section h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #e0e0e0;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #a78bfa, #ec4899);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+        }
+
+        .tool-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* Character Creator Section */
+        .character-section {
+            text-align: center;
+        }
+
+        .character-section h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+        }
+
+        .character-section p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 3rem;
+        }
+
+        .creator-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .creator-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .creator-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .creator-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #ec4899, #f59e0b);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+        }
+
+        .btn-tertiary {
+            background: rgba(71, 85, 105, 0.6);
+            color: #e0e0e0;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-tertiary:hover {
+            background: rgba(71, 85, 105, 0.8);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features-section h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #e0e0e0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #e0e0e0;
+        }
+
+        .feature-item p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 2rem;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer a {
+            color: #a78bfa;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #ec4899;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .creator-buttons {
+                flex-direction: column;
+            }
+
+            .creator-btn {
+                width: 100%;
+            }
+        }
+
+        /* Animation for cards */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-card, .feature-item {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .tool-card:nth-child(1) { animation-delay: 0.1s; }
+        .tool-card:nth-child(2) { animation-delay: 0.2s; }
+        .tool-card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
 <body>
-  <div class="stars" id="stars"></div>
-  
-  <div class="container">
-    <h1>✨ Voidlight Tools</h1>
-    <p class="subtitle">Campaign Management Suite for Voidlight RPG</p>
+    <!-- Starfield Background -->
+    <canvas id="starfield"></canvas>
 
-    <div class="tools-grid">
-      <a href="./character-creator/" class="tool-card">
-        <span class="tool-icon">🎭</span>
-        <h2 class="tool-title">Character Creator</h2>
-        <p class="tool-description">
-          Forge your character for the void. Create detailed characters with AI-powered backstories and complete stat management.
-        </p>
-        <ul class="tool-features">
-          <li>AI-powered character generation</li>
-          <li>Complete trait and skill management</li>
-          <li>Domain powers and abilities</li>
-          <li>Equipment and inventory tracking</li>
-        </ul>
-      </a>
+    <!-- Content Overlay -->
+    <div class="content-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='#home'">
+                    <div class="logo-icon">✨</div>
+                    <div class="logo-text">
+                        <h1>Voidlight Tools</h1>
+                        <p>Chronicles of the Stellar Veil</p>
+                    </div>
+                </div>
+                <nav class="nav-tabs">
+                    <a href="#home" class="nav-tab active" data-section="home">🏠 Home</a>
+                    <a href="#tools" class="nav-tab" data-section="tools">🎭 Tools</a>
+                    <a href="#character" class="nav-tab" data-section="character">⚡ Character</a>
+                    <a href="#features" class="nav-tab" data-section="features">🎮 Features</a>
+                    <a href="gm-screen/" class="nav-tab">🎲 GM Screen</a>
+                </nav>
+            </div>
+        </header>
 
-      <a href="./keeper-tool/" class="tool-card">
-        <span class="tool-icon">⚡</span>
-        <h2 class="tool-title">Keeper Tool</h2>
-        <p class="tool-description">
-          Master your campaign. Comprehensive DM tools for managing clocks, tokens, NPCs, and the flow of Hope and Fear.
-        </p>
-        <ul class="tool-features">
-          <li>Clock management (4/6/8/12 segments)</li>
-          <li>Fear & Hope token tracking</li>
-          <li>Duality dice roller (2d12)</li>
-          <li>NPC & enemy tracker</li>
-          <li>Session notes & Keeper moves</li>
-        </ul>
-      </a>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section id="home" class="hero">
+                <h2>A Spark in the Dark</h2>
+                <p>Welcome, Traveler. In the fractured, quieter galaxy, your actions echo. Forge your stellar soul, create a legend, and leave your mark on the void.</p>
+            </section>
+
+            <!-- Tools Section -->
+            <section id="tools" class="tools-section">
+                <h3>Your Journey Begins Here</h3>
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="window.location.href='character-creator/'">
+                        <div class="tool-icon">🎭</div>
+                        <h4>Character Creator</h4>
+                        <p>Forge your character for the void with AI-powered generation and complete stat management. Create heroes from diverse ancestries and classes.</p>
+                    </div>
+
+                    <div class="tool-card" onclick="window.location.href='keeper-tool/'">
+                        <div class="tool-icon">⚡</div>
+                        <h4>Keeper Tool</h4>
+                        <p>Master your campaign with clocks, tokens, dice roller, NPC tracker, and keeper moves. Everything you need to run epic sessions.</p>
+                    </div>
+
+                    <div class="tool-card" onclick="window.location.href='gm-screen/'">
+                        <div class="tool-icon">🎮</div>
+                        <h4>GM Screen</h4>
+                        <p>Quick reference for rules, tables, and essential game mechanics at your fingertips. Never lose momentum during play.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Character Creator Section -->
+            <section id="character" class="character-section">
+                <h3>Create Your Legend</h3>
+                <p>Choose how you want to begin your journey through the void</p>
+                <div class="creator-buttons">
+                    <button class="creator-btn btn-primary" onclick="window.location.href='character-creator/'">Create New Character</button>
+                    <button class="creator-btn btn-secondary" onclick="window.location.href='character-creator/'">Generate Random</button>
+                    <button class="creator-btn btn-tertiary" onclick="window.location.href='character-creator/'">Import Character</button>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="features-section">
+                <h3>Why Choose Voidlight?</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎲</div>
+                        <h4>Duality Dice System</h4>
+                        <p>Every roll tells a story with Hope and Fear</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌟</div>
+                        <h4>8+ Unique Ancestries</h4>
+                        <p>From Humans to Ethereals, find your identity</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚔️</div>
+                        <h4>6 Distinct Classes</h4>
+                        <p>Pilot, Soldier, Scholar, Engineer, and more</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔮</div>
+                        <h4>Dominion Powers</h4>
+                        <p>Master Tech, Kinetic, Void, and other domains</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🚀</div>
+                        <h4>Space Opera Setting</h4>
+                        <p>Explore a galaxy recovering from catastrophe</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💫</div>
+                        <h4>Free Digital Tools</h4>
+                        <p>Professional-grade tools at no cost</p>
+                    </div>
+                </div>
+                
+                <!-- Call to Action -->
+                <div style="text-align: center; margin-top: 4rem;">
+                    <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: #e0e0e0;">Explore All Game Content</h3>
+                    <p style="font-size: 1.2rem; color: #94a3b8; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                        Browse the complete card database with all ancestries, classes, powers, and game mechanics
+                    </p>
+                    <button class="creator-btn btn-primary" onclick="window.open('https://voidlight.bungu.top/all', '_blank')" style="font-size: 1.2rem; padding: 1.25rem 2.5rem;">
+                        View All Cards &amp; Content →
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Voidlight: Chronicles of the Stellar Veil</p>
+            <p>Built for a universe of patched-up ships and patched-up souls</p>
+            <p>Starfield effect • <a href="https://github.com/pedroalto" target="_blank">View on GitHub</a></p>
+        </footer>
     </div>
 
-    <div class="footer">
-      <p>Built for Voidlight RPG • A galaxy of patched-up ships and patched-up souls</p>
-    </div>
-  </div>
+    <!-- Complete Starfield Script with Realistic Planets -->
+    <script>
+        let canvas = document.querySelector("#starfield");
+        let ctx = canvas.getContext('2d');
 
-  <script>
-    // Generate random stars
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 100; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 3 + 's';
-      starsContainer.appendChild(star);
-    }
-  </script>
+        let canvasWidth = window.innerWidth;
+        let canvasHeight = window.innerHeight;
+
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+        let centerX = canvasWidth * 0.5;
+        let centerY = canvasHeight * 0.5;
+
+        let numberOfStars = 800;
+        let stars = [];
+        let planets = [];
+
+        let baseSpeed = 2;
+        let warpSpeed = baseSpeed;
+        let targetWarpSpeed = baseSpeed;
+
+        // Scroll tracking
+        let scrollY = 0;
+        let targetScrollY = 0;
+
+        // Planet types based on solar system
+        const planetTypes = [
+            {
+                name: 'Mercury',
+                baseColor: { r: 100, g: 100, b: 110 },
+                secondaryColor: { r: 80, g: 80, b: 90 },
+                hasAtmosphere: false,
+                craterDensity: 0.8
+            },
+            {
+                name: 'Venus',
+                baseColor: { r: 140, g: 120, b: 80 },
+                secondaryColor: { r: 120, g: 100, b: 60 },
+                hasAtmosphere: true,
+                atmosphereColor: { r: 180, g: 150, b: 100 },
+                craterDensity: 0.1
+            },
+            {
+                name: 'Earth',
+                baseColor: { r: 60, g: 100, b: 140 },
+                secondaryColor: { r: 80, g: 120, b: 80 },
+                hasAtmosphere: true,
+                atmosphereColor: { r: 100, g: 150, b: 200 },
+                craterDensity: 0.2
+            },
+            {
+                name: 'Mars',
+                baseColor: { r: 140, g: 80, b: 60 },
+                secondaryColor: { r: 120, g: 60, b: 40 },
+                hasAtmosphere: false,
+                craterDensity: 0.6
+            },
+            {
+                name: 'Jupiter',
+                baseColor: { r: 160, g: 130, b: 100 },
+                secondaryColor: { r: 140, g: 110, b: 80 },
+                hasAtmosphere: true,
+                atmosphereColor: { r: 180, g: 150, b: 120 },
+                hasBands: true,
+                craterDensity: 0
+            },
+            {
+                name: 'Saturn',
+                baseColor: { r: 150, g: 140, b: 110 },
+                secondaryColor: { r: 130, g: 120, b: 90 },
+                hasAtmosphere: true,
+                atmosphereColor: { r: 170, g: 160, b: 130 },
+                hasBands: true,
+                craterDensity: 0
+            },
+            {
+                name: 'Uranus',
+                baseColor: { r: 80, g: 130, b: 140 },
+                secondaryColor: { r: 60, g: 110, b: 120 },
+                hasAtmosphere: true,
+                atmosphereColor: { r: 100, g: 150, b: 160 },
+                craterDensity: 0
+            },
+            {
+                name: 'Neptune',
+                baseColor: { r: 60, g: 90, b: 140 },
+                secondaryColor: { r: 40, g: 70, b: 120 },
+                hasAtmosphere: true,
+                atmosphereColor: { r: 80, g: 110, b: 160 },
+                craterDensity: 0
+            }
+        ];
+
+        // Planet class with realistic textures
+        class Planet {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = getRandomInt(-centerX, centerX);
+                this.y = getRandomInt(-centerY, centerY);
+                this.z = getRandomInt(canvasWidth * 0.3, canvasWidth);
+                
+                this.baseRadius = getRandomInt(25, 70);
+                this.speed = 0.3 + Math.random() * 0.4;
+                
+                // Select random planet type
+                this.type = planetTypes[Math.floor(Math.random() * planetTypes.length)];
+                
+                // Random rotation for texture variation
+                this.rotation = Math.random() * Math.PI * 2;
+            }
+
+            update() {
+                this.z -= this.speed * warpSpeed;
+
+                if (this.z <= 0) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                let xRatio = this.x / this.z;
+                let yRatio = this.y / this.z;
+
+                let planetX = remap(xRatio, 0, 1, 0, canvasWidth);
+                let planetY = remap(yRatio, 0, 1, 0, canvasHeight) + scrollY * 0.08;
+
+                let radius = remap(this.z, 0, canvasWidth, this.baseRadius, 0);
+                let opacity = remap(this.z, 0, canvasWidth, 0.9, 0);
+
+                if (radius < 2) return;
+
+                ctx.save();
+
+                // Draw atmosphere glow if planet has one
+                if (this.type.hasAtmosphere) {
+                    let atmColor = this.type.atmosphereColor || this.type.baseColor;
+                    let gradient = ctx.createRadialGradient(
+                        planetX, planetY, radius * 0.7,
+                        planetX, planetY, radius * 1.4
+                    );
+                    gradient.addColorStop(0, `rgba(${atmColor.r}, ${atmColor.g}, ${atmColor.b}, 0)`);
+                    gradient.addColorStop(0.7, `rgba(${atmColor.r}, ${atmColor.g}, ${atmColor.b}, ${opacity * 0.15})`);
+                    gradient.addColorStop(1, `rgba(${atmColor.r}, ${atmColor.g}, ${atmColor.b}, 0)`);
+                    
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(planetX, planetY, radius * 1.4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Draw planet body with lighting
+                let planetGradient = ctx.createRadialGradient(
+                    planetX - radius * 0.4, planetY - radius * 0.4, radius * 0.1,
+                    planetX, planetY, radius * 1.2
+                );
+                
+                // Lighter on the "sun-facing" side
+                planetGradient.addColorStop(0, `rgba(${this.type.baseColor.r + 40}, ${this.type.baseColor.g + 40}, ${this.type.baseColor.b + 40}, ${opacity})`);
+                planetGradient.addColorStop(0.5, `rgba(${this.type.baseColor.r}, ${this.type.baseColor.g}, ${this.type.baseColor.b}, ${opacity})`);
+                // Darker on the shadow side
+                planetGradient.addColorStop(1, `rgba(${this.type.baseColor.r - 40}, ${this.type.baseColor.g - 40}, ${this.type.baseColor.b - 40}, ${opacity})`);
+                
+                ctx.fillStyle = planetGradient;
+                ctx.beginPath();
+                ctx.arc(planetX, planetY, radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Add surface features based on planet type
+                if (this.type.hasBands) {
+                    // Gas giant bands
+                    for (let i = 0; i < 4; i++) {
+                        let bandY = planetY - radius + (radius * 2 * (i + 1) / 5);
+                        let bandHeight = radius * 0.15;
+                        
+                        ctx.fillStyle = `rgba(${this.type.secondaryColor.r}, ${this.type.secondaryColor.g}, ${this.type.secondaryColor.b}, ${opacity * 0.4})`;
+                        ctx.beginPath();
+                        ctx.ellipse(planetX, bandY, radius * 0.95, bandHeight, 0, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                } else if (this.type.craterDensity > 0) {
+                    // Rocky planet craters/features
+                    let numFeatures = Math.floor(this.type.craterDensity * 5);
+                    for (let i = 0; i < numFeatures; i++) {
+                        let angle = this.rotation + (i * Math.PI * 2 / numFeatures);
+                        let distance = radius * (0.3 + Math.random() * 0.4);
+                        let featureX = planetX + Math.cos(angle) * distance;
+                        let featureY = planetY + Math.sin(angle) * distance;
+                        let featureRadius = radius * (0.1 + Math.random() * 0.15);
+                        
+                        ctx.fillStyle = `rgba(${this.type.secondaryColor.r}, ${this.type.secondaryColor.g}, ${this.type.secondaryColor.b}, ${opacity * 0.5})`;
+                        ctx.beginPath();
+                        ctx.arc(featureX, featureY, featureRadius, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                // Add terminator (day/night line) shadow
+                let shadowGradient = ctx.createRadialGradient(
+                    planetX + radius * 0.3, planetY, radius * 0.1,
+                    planetX + radius * 0.3, planetY, radius * 1.2
+                );
+                shadowGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+                shadowGradient.addColorStop(0.7, `rgba(0, 0, 0, ${opacity * 0.4})`);
+                shadowGradient.addColorStop(1, `rgba(0, 0, 0, ${opacity * 0.6})`);
+                
+                ctx.fillStyle = shadowGradient;
+                ctx.beginPath();
+                ctx.arc(planetX, planetY, radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // Star class
+        class Star {
+            constructor() {
+                this.x = getRandomInt(-centerX, centerX);
+                this.y = getRandomInt(-centerY, centerY);
+                this.z = getRandomInt(1, canvasWidth);
+
+                this.radiusMax = 1 + Math.random() * 2;
+                this.speed = getRandomInt(1, 3);
+                this.depth = this.z / canvasWidth;
+            }
+
+            update() {
+                this.z -= this.speed * warpSpeed;
+
+                if (this.z <= 0) {
+                    this.z = canvasWidth;
+                    this.x = getRandomInt(-centerX, centerX);
+                    this.y = getRandomInt(-centerY, centerY);
+                    this.radiusMax = 1 + Math.random() * 2;
+                    this.speed = getRandomInt(1, 3);
+                    this.depth = this.z / canvasWidth;
+                }
+            }
+
+            draw() {
+                let xRatio = this.x / this.z;
+                let yRatio = this.y / this.z;
+
+                let starX = remap(xRatio, 0, 1, 0, canvasWidth);
+                let starY = remap(yRatio, 0, 1, 0, canvasHeight) + scrollY * this.depth * 0.3;
+
+                let radius = remap(this.z, 0, canvasWidth, this.radiusMax, 0);
+                let opacity = remap(this.z, 0, canvasWidth, 1, 0);
+
+                let hue = 270 + Math.random() * 30;
+                ctx.fillStyle = `hsla(${hue}, 80%, 70%, ${opacity})`;
+                
+                ctx.beginPath();
+                ctx.arc(starX, starY, radius, 0, Math.PI * 2, false);
+                ctx.fill();
+
+                if (radius > 1) {
+                    ctx.shadowBlur = radius * 2;
+                    ctx.shadowColor = `hsla(${hue}, 80%, 70%, ${opacity * 0.5})`;
+                }
+            }
+        }
+
+        // Initialize
+        function setup() {
+            for (let i = 0; i < numberOfStars; i++) {
+                stars.push(new Star());
+            }
+            
+            const numPlanets = getRandomInt(3, 5);
+            for (let i = 0; i < numPlanets; i++) {
+                planets.push(new Planet());
+            }
+        }
+
+        // Animation loop
+        function draw() {
+            scrollY += (targetScrollY - scrollY) * 0.1;
+            warpSpeed += (targetWarpSpeed - warpSpeed) * 0.05;
+
+            ctx.fillStyle = "rgba(10, 15, 35, 0.3)";
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+            ctx.shadowBlur = 0;
+
+            ctx.save();
+            ctx.translate(centerX, centerY);
+
+            for (let i = 0; i < planets.length; i++) {
+                planets[i].update();
+                planets[i].draw();
+            }
+
+            for (let i = 0; i < stars.length; i++) {
+                stars[i].update();
+                stars[i].draw();
+            }
+
+            ctx.restore();
+
+            requestAnimationFrame(draw);
+        }
+
+        // Helper functions
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function remap(value, istart, istop, ostart, ostop) {
+            return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+        }
+
+        // Window resize
+        window.addEventListener('resize', () => {
+            canvasWidth = window.innerWidth;
+            canvasHeight = window.innerHeight;
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+            centerX = canvasWidth * 0.5;
+            centerY = canvasHeight * 0.5;
+        });
+
+        // Scroll parallax
+        let lastScrollY = 0;
+        let scrollTimeout;
+        
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            targetScrollY = currentScrollY;
+            
+            let scrollVelocity = currentScrollY - lastScrollY;
+            const scrollSpeed = Math.abs(scrollVelocity);
+            
+            if (scrollSpeed > 5) {
+                targetWarpSpeed = baseSpeed * (2 + Math.min(scrollSpeed / 20, 3));
+            }
+            
+            lastScrollY = currentScrollY;
+            clearTimeout(scrollTimeout);
+            
+            scrollTimeout = setTimeout(() => {
+                targetWarpSpeed = baseSpeed;
+            }, 150);
+        });
+
+        // Interactive elements
+        document.querySelectorAll('.tool-card, .creator-btn, .feature-item').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                targetWarpSpeed = baseSpeed * 4;
+            });
+            element.addEventListener('mouseleave', () => {
+                targetWarpSpeed = baseSpeed;
+            });
+        });
+
+        // Navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                targetWarpSpeed = baseSpeed * 8;
+                
+                const sectionId = tab.getAttribute('data-section');
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                setTimeout(() => {
+                    targetWarpSpeed = baseSpeed;
+                }, 2500);
+            });
+        });
+
+        // Spawn new planets
+        setInterval(() => {
+            if (Math.random() > 0.7 && planets.length < 8) {
+                planets.push(new Planet());
+            }
+        }, 15000);
+
+        // Cleanup
+        setInterval(() => {
+            planets = planets.filter(planet => planet.z > -100);
+        }, 5000);
+
+        // Start
+        setup();
+        draw();
+    </script>
 </body>
 </html>
